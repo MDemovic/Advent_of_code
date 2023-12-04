@@ -1,0 +1,16 @@
+fun main() {
+    var totalSum = 0
+    while (true) {
+        val line = readln()
+        if (line.isEmpty()){
+            break
+        }
+        val (digits) = line.partition { it.isDigit() }
+        if (digits.count() == 1) {
+            totalSum += digits[0].toString().toInt() + digits[0].toString().toInt() * 10
+        } else if (digits.count() >= 2) {
+            totalSum += digits[digits.count()-1].toString().toInt() + digits[0].toString().toInt() * 10
+        }
+    }
+    println("$totalSum")
+}
