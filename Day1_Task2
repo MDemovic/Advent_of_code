@@ -1,5 +1,3 @@
-package demovic_uloha1
-
 fun main() {
     var totalSum = 0
     while (true) {
