@@ -1,15 +1,45 @@
 fun main() {
     var totalSum = 0
+    val dictDigits = mapOf(
+        "one" to "1",
+        "two" to "2",
+        "three" to "3",
+        "four" to "4",
+        "five" to "5",
+        "six" to "6",
+        "seven" to "7",
+        "eight" to "8",
+        "nine" to "9"
+    )
+
     while (true) {
-        val line = readln()
-        if (line.isEmpty()){
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
             break
         }
-        val (digits) = line.partition { it.isDigit() }
-        if (digits.count() == 1) {
-            totalSum += digits[0].toString().toInt() + digits[0].toString().toInt() * 10
-        } else if (digits.count() >= 2) {
-            totalSum += digits[digits.count()-1].toString().toInt() + digits[0].toString().toInt() * 10
+
+        var newLine = ""
+        for (index in 0 until line.length) {
+            var found = false
+
+            for ((word, digit) in dictDigits) {
+                val endIndex = index + word.length
+                if (endIndex <= line.length && line.substring(index, endIndex) == word) {
+                    newLine += digit
+                    found = true
+                    break
+                }
+            }
+
+            if (!found && Character.isDigit(line[index])) {
+                newLine += line[index]
+            }
+        }
+
+        if (newLine.length == 1) {
+            totalSum += newLine.toInt() + newLine.toInt() * 10
+        } else if (newLine.length >= 2) {
+            totalSum += (newLine[newLine.length - 1].toString().toInt() + newLine[0].toString().toInt() * 10)
         }
     }
     println("$totalSum")
