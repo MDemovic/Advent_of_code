@@ -1,0 +1,35 @@
+fun main() {
+    var totalPowerSum = 0
+    while (true) {
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
+            break
+        }
+        val trimmedGames = line.substringAfter(": ").trim()
+        val rgbValue = mapOf(
+            'r' to 0,
+            'g' to 1,
+            'b' to 2
+        )
+
+        var rgb = arrayListOf(0,0,0)
+        var digit = ""
+
+        for (i in 0..<trimmedGames.length - 2) {
+            if (trimmedGames[i].isDigit()) {
+                digit += trimmedGames[i]
+
+            } else if (trimmedGames[i] == ' ' && digit.isNotEmpty()){
+                val letter = trimmedGames[i + 1].lowercaseChar()
+                var index = rgbValue[letter]
+
+                if (rgb[index!!] <  digit.toInt()){
+                    rgb[index!!] = digit.toInt()
+                }
+                digit = ""
+            }
+        }
+        totalPowerSum += rgb[0] * rgb[1] * rgb[2]
+    }
+    println("$totalPowerSum")
+}
