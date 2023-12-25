@@ -1,0 +1,42 @@
+fun main() {
+    var totalIdSum = 0
+    var counter = 1
+    while (true) {
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
+            break
+        }
+        val trimmedGames = line.substringAfter(": ").trim()
+        val rgbValue = mapOf(
+            'r' to 0,
+            'g' to 1,
+            'b' to 2
+        )
+        var possible = true
+        var rgb = arrayListOf(0,0,0)
+        //println(trimmedGames)
+
+        var digit = ""
+        for (i in 0..<trimmedGames.length - 2) {
+            if (trimmedGames[i].isDigit()) {
+                digit += trimmedGames[i]
+            } else if (trimmedGames[i] == ' ' && digit.isNotEmpty()){
+                val letter = trimmedGames[i + 1].lowercaseChar()
+                var index = rgbValue[letter]
+                rgb[index!!] += digit.toInt()
+                digit = ""
+                if (rgb[0] <= 12 && rgb[1] <= 13 && rgb[2] <= 14){
+                    rgb = arrayListOf(0,0,0)
+                } else {
+                    possible = false
+                }
+            }
+        }
+
+        if (possible){
+            totalIdSum += counter
+        }
+        counter++
+    }
+    println("$totalIdSum")
+}
