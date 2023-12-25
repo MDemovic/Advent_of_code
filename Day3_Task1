@@ -1,0 +1,54 @@
+fun main() {
+    val lines = mutableListOf<String>()
+    while (true) {
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
+            break
+        }
+        lines.add(line)
+    }
+
+    var totalSum = 0
+    for (rowIndex in lines.indices) {
+        val line = lines[rowIndex]
+        var contains = false
+        var digit = ""
+
+        for (colIndex in line.indices) {
+            if (line[colIndex].isDigit()) {
+                digit += line[colIndex]
+                if (hasAdjacent(lines, rowIndex, colIndex)) {
+                    contains = true
+                }
+
+            } else {
+                if (contains) {
+                    totalSum += digit.toInt()
+                }
+                digit = ""
+                contains = false
+            }
+        }
+        if (contains) {
+            totalSum += digit.toInt()
+            println(line)
+        }
+    }
+    println("Total Sum: $totalSum")
+}
+
+fun hasAdjacent(lines: List<String>, rowIndex: Int, colIndex: Int): Boolean {
+    for (i in -1..1) {
+        for (j in -1..1) {
+            if (!(i == 0 && j == 0)) {
+                val newRow = rowIndex + i
+                val newCol = colIndex + j
+                if (newRow in lines.indices && newCol in lines[newRow].indices &&
+                    !(lines[newRow][newCol] == '.' || lines[newRow][newCol].isDigit())) {
+                    return true
+                }
+            }
+        }
+    }
+    return false
+}
