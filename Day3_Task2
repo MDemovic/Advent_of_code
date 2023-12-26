@@ -21,8 +21,7 @@ fun main() {
             for (xDirection in (rowIndex - 1)..(rowIndex + 1)) {
                 for (yDirection in (colIndex - 1)..(colIndex + 1)) {
                     if (xDirection < 0 || yDirection < 0 || xDirection >= lines.size || yDirection >= lines[xDirection].length ||
-                        !lines[xDirection][yDirection].isDigit()
-                    ) {
+                        !lines[xDirection][yDirection].isDigit()) {
                         continue
                     }
                     var tempYDirection = yDirection
