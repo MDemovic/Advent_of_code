@@ -1,0 +1,54 @@
+
+fun main() {
+    val lines = mutableListOf<String>()
+    while (true) {
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
+            break
+        }
+        lines.add(line)
+    }
+
+    var totalSum = 0
+    for (r in lines.indices) {
+        val row = lines[r]
+        for (c in row.indices) {
+            val char = row[c]
+            if (char != '*') {
+                continue
+            }
+
+            val coords = mutableSetOf<Pair<Int, Int>>()
+            for (xDirection in (r - 1)..(r + 1)) {
+                for (yDirection in (c - 1)..(c + 1)) {
+                    if (xDirection < 0 || yDirection < 0 || xDirection >= lines.size || yDirection >= lines[xDirection].length ||
+                        !lines[xDirection][yDirection].isDigit()
+                    ) {
+                        continue
+                    }
+                    var tempYDirection = yDirection
+                    while (tempYDirection > 0 && lines[xDirection][tempYDirection - 1].isDigit()) {
+                        tempYDirection--
+                    }
+                    coords.add(Pair(xDirection, tempYDirection))
+                }
+            }
+
+            if (coords.size == 2) {
+                val numbers = coords.map { (y, x) -> getNumber(lines, y, x) }
+                totalSum += numbers[0] * numbers[1]
+            }
+        }
+    }
+    println("Total Sum: $totalSum")
+}
+
+fun getNumber(grid: List<String>, row: Int, col: Int): Int {
+    var number = ""
+    var currentCol = col
+    while (currentCol < grid[row].length && grid[row][currentCol].isDigit()) {
+        number += grid[row][currentCol]
+        currentCol++
+    }
+    return number.toInt()
+}
