@@ -1,0 +1,25 @@
+
+fun main() {
+    var totalScratchCards = 1
+    var scratchCopies = mutableListOf<Int>()
+    scratchCopies.add(202)
+    println()
+    while (true) {
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
+            break
+        }
+
+        val trimmedNumbers = line.substringAfter(": ").trim()
+        val splitArrays = trimmedNumbers.split(" | ")
+        val winningNumbers = splitArrays[0].split(" ").filter { it.isNotEmpty() }.map { it.toInt() }.toSet()
+        val myNumbers = splitArrays[1].split(" ").filter { it.isNotEmpty() }.map { it.toInt() }.toSet()
+        val matches = winningNumbers intersect myNumbers
+
+        scratchCopies.addAll(List(scratchCopies.size) { matches.size+1 })
+        scratchCopies = scratchCopies.map { it - 1 }.toMutableList()
+        scratchCopies.removeAll { it <= 0 }
+        totalScratchCards += scratchCopies.size
+    }
+    println("$totalScratchCards")
+}
