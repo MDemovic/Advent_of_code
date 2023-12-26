@@ -1,0 +1,19 @@
+import kotlin.math.pow
+
+fun main() {
+    var totalPowerSum = 0
+    println()
+    while (true) {
+        val line = readLine()
+        if (line.isNullOrEmpty()) {
+            break
+        }
+        val trimmedNumbers = line.substringAfter(": ").trim()
+        val splitArrays = trimmedNumbers.split(" | ")
+        val winningNumbers = splitArrays[0].split(" ").filter { it.isNotEmpty() }.map { it.toInt() }.toSet()
+        val myNumbers = splitArrays[1].split(" ").filter { it.isNotEmpty() }.map { it.toInt() }.toSet()
+        val matches = winningNumbers intersect myNumbers
+        totalPowerSum += 2.0.pow(matches.size-1).toInt()
+    }
+    println("$totalPowerSum")
+}
